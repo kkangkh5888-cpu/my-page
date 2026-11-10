@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소환사 '여~'의 전장 일지</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font (Cinzel & Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #091428;
+            color: #F0E6D2;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(10, 50, 60, 0.6) 0%, transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(30, 35, 40, 0.8) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* 룬테라 골드 보더 스태킹 */
+        .hextech-border {
+            border: 2px solid #C8AA6E;
+            box-shadow: 0 0 15px rgba(200, 170, 110, 0.3), inset 0 0 10px rgba(0, 90, 130, 0.5);
+        }
+
+        .hextech-card {
+            background: linear-gradient(135deg, rgba(10, 30, 45, 0.95), rgba(1, 10, 19, 0.95));
+            border: 1px solid #785A28;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 카드 Flip 애니메이션 3D 스타일 */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* 커스텀 버튼 스타일 */
+        .lol-btn {
+            background: linear-gradient(180deg, #1E2328 0%, #010A13 100%);
+            border: 2px solid #C8AA6E;
+            color: #CDBE91;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lol-btn:hover {
+            color: #F0E6D2;
+            border-color: #F0E6D2;
+            box-shadow: 0 0 15px rgba(200, 170, 110, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .lol-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* 파티클 효과용 캐논 애니메이션 */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            animation: float 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col items-center justify-start px-4">
+
+    <!-- 상단 챔피언 헤더 영역 -->
+    <header class="w-full max-w-4xl text-center my-8 md:my-12">
+        <div class="inline-block px-4 py-1 mb-3 border border-[#C8AA6E] bg-[#091428]/80 text-[#C8AA6E] tracking-widest text-xs md:text-sm uppercase font-bold rounded-full shadow-lg">
+            WELCOME TO SUMMONER'S RIFT
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-[#F0E6D2] via-[#C8AA6E] to-[#785A28] drop-shadow-md mb-2">
+            소환사 "여~"
+        </h1>
+        <p class="text-gray-400 text-sm md:text-base font-medium">
+            "내 넥서스는 절대 깨지지 않는다! (아마도?)"
+        </p>
+    </header>
+
+    <!-- 프로필 카드 (소환사 카드) -->
+    <section class="w-full max-w-4xl hextech-card hextech-border p-6 md:p-8 rounded-xl mb-12 relative overflow-hidden">
+        <!-- 배경 데코레이션 룬문양 느낌 -->
+        <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none text-9xl text-[#C8AA6E]">
+            <i class="fa-solid fa-[#shield-halved]"></i>
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <div class="relative">
+                <div class="w-28 h-28 md:w-36 md:h-36 rounded-full border-4 border-[#C8AA6E] bg-gradient-to-b from-[#0A323C] to-[#010A13] flex items-center justify-center shadow-2xl relative">
+                    <i class="fa-solid fa-gamepad text-5xl md:text-6xl text-[#C8AA6E]"></i>
+                    <div class="absolute -bottom-2 bg-[#1E2328] border border-[#C8AA6E] px-3 py-0.5 rounded-full text-xs text-[#005A82] font-bold">
+                        LV. 999
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center md:text-left flex-1">
+                <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                    <span class="text-xl md:text-2xl font-bold text-[#F0E6D2]">소환사 ID:</span>
+                    <span class="text-2xl md:text-3xl font-extrabold text-[#C8AA6E]">여~</span>
+                </div>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-4">
+                    전장에 들어온 것을 환영한다! 랭크 게임 승급전을 앞두고 주탑을 지키는 든든한(사실은 게임을 짱 좋아하는) 소환사 "여~"입니다. 
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span class="px-3 py-1 bg-[#0A323C]/60 border border-[#005A82] text-[#005A82] text-xs font-bold rounded">#리그오브레전드</span>
+                    <span class="px-3 py-[#C8AA6E] bg-[#0A323C]/60 border border-[#005A82] text-[#005A82] text-xs font-bold rounded">#올라운더</span>
+                    <span class="px-3 py-1 bg-[#0A323C]/60 border border-[#005A82] text-[#005A82] text-xs font-bold rounded">#즐겜유저</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 좋아하는 것 3가지 (3D 카드 뒤집기) -->
+    <section class="w-full max-w-4xl mb-16">
+        <h2 class="text-2xl md:text-3xl font-bold text-center text-[#C8AA6E] mb-2 font-cinzel">
+            <i class="fa-solid fa-gem mr-2"></i>FAVORITE THINGS
+        </h2>
+        <p class="text-center text-gray-400 text-xs md:text-sm mb-8">카드를 클릭하여 소환사의 비하인드 스토리를 확인하세요!</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- 카드 1: 게임 -->
+            <div class="card-container h-64 cursor-pointer perspective-1000" onclick="flipCard(this)">
+                <div class="card-inner relative w-full h-full transform-style-3d rounded-xl shadow-xl">
+                    <!-- 앞면 -->
+                    <div class="card-front absolute w-full h-full backface-hidden hextech-card hextech-border rounded-xl p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-[#0A323C] border border-[#C8AA6E] flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-headset text-3xl text-[#C8AA6E]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#F0E6D2]">1. 게임</h3>
+                        <p class="text-xs text-[#005A82] mt-2 font-semibold">클릭하여 이유는 확인 👆</p>
+                    </div>
+                    <!-- 뒷면 -->
+                    <div class="card-back absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-[#1E2328] to-[#010A13] border-2 border-[#005A82] rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-inner">
+                        <i class="fa-solid fa-quote-left text-2xl text-[#C8AA6E] mb-2 opacity-50"></i>
+                        <p class="text-sm text-gray-200 leading-relaxed font-medium">
+                            "현실 세계보다 아늑한 디지털 무릉도원! 렉 없는 세상에서 마우스 딸깍거릴 때 비로소 진정한 살아있음을 느낍니다."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 카드 2: 롤 -->
+            <div class="card-container h-64 cursor-pointer perspective-1000" onclick="flipCard(this)">
+                <div class="card-inner relative w-full h-full transform-style-3d rounded-xl shadow-xl">
+                    <!-- 앞면 -->
+                    <div class="card-front absolute w-full h-full backface-hidden hextech-card hextech-border rounded-xl p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-[#0A323C] border border-[#C8AA6E] flex items-center justify-center mb-3 overflow-hidden shadow-md">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=200&q=80" alt="League of Legends Esports" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.src='https://placehold.co/100x100/0A323C/C8AA6E?text=LoL'">
+                        </div>
+                        <h3 class="text-xl font-bold text-[#F0E6D2]">2. 롤</h3>
+                        <p class="text-xs text-[#005A82] mt-2 font-semibold">클릭하여 이유는 확인 👆</p>
+                    </div>
+                    <!-- 뒷면 -->
+                    <div class="card-back absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-[#1E2328] to-[#010A13] border-2 border-[#005A82] rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-inner">
+                        <i class="fa-solid fa-quote-left text-2xl text-[#C8AA6E] mb-2 opacity-50"></i>
+                        <p class="text-sm text-gray-200 leading-relaxed font-medium">
+                            "두 글자만 들어도 가슴이 웅장해지는 그 이름. 친구들과 핑 찍으며 억까당할 때야말로 진정한 우정이 싹트는 법!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 카드 3: 리그 오브 레전드 -->
+            <div class="card-container h-64 cursor-pointer perspective-1000" onclick="flipCard(this)">
+                <div class="card-inner relative w-full h-full transform-style-3d rounded-xl shadow-xl">
+                    <!-- 앞면 -->
+                    <div class="card-front absolute w-full h-full backface-hidden hextech-card hextech-border rounded-xl p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-[#0A323C] border border-[#C8AA6E] flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-[#crown] text-3xl text-[#C8AA6E]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#F0E6D2]">3. 리그 오브 레전드</h3>
+                        <p class="text-xs text-[#005A82] mt-2 font-semibold">클릭하여 이유는 확인 👆</p>
+                    </div>
+                    <!-- 뒷면 -->
+                    <div class="card-back absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-[#1E2328] to-[#010A13] border-2 border-[#005A82] rounded-xl p-6 flex flex-col items-center justify-center text-center shadow-inner">
+                        <i class="fa-solid fa-quote-left text-2xl text-[#C8AA6E] mb-2 opacity-50"></i>
+                        <p class="text-sm text-gray-200 leading-relaxed font-medium">
+                            "풀네임으로 불러줘야 하는 내 삶의 정수! 롤이랑 롤은 똑같지만 '리그 오브 레전드'는 왠지 더 웅장하잖아요?"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OX 퀴즈 섹션 -->
+    <section class="w-full max-w-4xl hextech-card hextech-border p-6 md:p-8 rounded-xl mb-16 relative">
+        <h2 class="text-2xl font-bold text-center text-[#C8AA6E] mb-4 font-cinzel">
+            <i class="fa-solid fa-[#circle-question] mr-2"></i>소환사 심판소 OX 퀴즈
+        </h2>
+        <div class="text-center mb-6">
+            <p class="text-xl md:text-2xl font-bold text-[#F0E6D2]">"롤(LoL)이 좋다!"</p>
+            <p class="text-xs text-gray-400 mt-1">당신의 선택은 무엇입니까?</p>
+        </div>
+
+        <div class="flex justify-center gap-6 mb-4">
+            <button onclick="checkQuiz('O', event)" class="lol-btn px-8 py-4 rounded-lg font-black text-2xl w-32 flex items-center justify-center gap-2">
+                <i class="fa-regular fa-circle text-green-400"></i> O
+            </button>
+            <button onclick="checkQuiz('X', event)" class="lol-btn px-8 py-4 rounded-lg font-black text-2xl w-32 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-xmark text-red-400"></i> X
+            </button>
+        </div>
+
+        <!-- 결과 메시지 상자 -->
+        <div id="quiz-result" class="hidden text-center p-4 rounded-lg border transition-all duration-300">
+            <!-- JS로 내용 입력됨 -->
+        </div>
+    </section>
+
+    <!-- 롤 챔피언 랜덤 추천 섹션 -->
+    <section class="w-full max-w-4xl text-center mb-12">
+        <div class="hextech-card hextech-border p-6 md:p-8 rounded-xl">
+            <h2 class="text-2xl font-bold text-[#C8AA6E] mb-2 font-cinzel">
+                <i class="fa-solid fa-dice mr-2"></i>오늘의 롤 챔피언 추천
+            </h2>
+            <p class="text-gray-400 text-sm mb-6">무슨 챔피언을 할지 고민이신가요? 넥서스가 추천해 드립니다!</p>
+
+            <!-- 추천 결과 디스플레이 -->
+            <div id="champion-display" class="min-h-[140px] bg-[#010A13] border border-[#785A28] rounded-lg p-6 flex flex-col items-center justify-center mb-6 transition-all duration-300">
+                <i class="fa-solid fa-shield-cat text-4xl text-gray-600 mb-2"></i>
+                <p class="text-gray-400 text-sm">아래 버튼을 눌러 챔피언을 소환하세요!</p>
+            </div>
+
+            <button onclick="recommendChampion()" class="lol-btn font-bold px-8 py-3 rounded-lg text-lg uppercase tracking-wider">
+                <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> 챔피언 랜덤 추천받기
+            </button>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="text-center text-gray-500 text-xs py-4 border-t border-[#785A28]/30 w-full max-w-4xl">
+        <p>© 2026 소환사 '여~'의 개인 공간. All rights reserved.</p>
+        <p class="mt-1">League of Legends and all related logos are trademarks of Riot Games, Inc.</p>
+    </footer>
+
+    <!-- JavaScript 로직 -->
+    <script>
+        // 1. 카드 뒤집기 (3D Flip)
+        function flipCard(element) {
+            const inner = element.querySelector('.card-inner');
+            inner.classList.toggle('rotate-y-180');
+        }
+
+        // 2. OX 퀴즈 로직
+        function checkQuiz(answer, event) {
+            const resultBox = document.getElementById('quiz-result');
+            resultBox.classList.remove('hidden', 'bg-green-950/60', 'border-green-500', 'bg-red-950/60', 'border-red-500');
+
+            if (answer === 'O') {
+                // 정답 (축하 효과)
+                resultBox.classList.add('bg-green-950/60', 'border-green-500');
+                resultBox.innerHTML = `
+                    <div class="text-green-400 font-bold text-lg mb-1">
+                        <i class="fa-solid fa-trophy mr-1"></i> 정답입니다! 펜타킬!
+                    </div>
+                    <p class="text-gray-200 text-sm">역시 뭘 좀 아시는군요! 롤은 최고의 게임입니다! 🎮</p>
+                `;
+                createParticles(event.clientX, event.clientY, '#4ADE80');
+            } else {
+                // 오답 (아쉬운 효과)
+                resultBox.classList.add('bg-red-950/60', 'border-red-500');
+                resultBox.innerHTML = `
+                    <div class="text-red-400 font-bold text-lg mb-1">
+                        <i class="fa-solid fa-skull mr-1"></i> 처치당했습니다...
+                    </div>
+                    <p class="text-gray-200 text-sm">에이 거짓말! 다시 생각해보세요. 롤이 싫을 리가 없잖아요! 😢</p>
+                `;
+                createParticles(event.clientX, event.clientY, '#F87171');
+            }
+        }
+
+        // 파티클 생성 함수 (버튼 위치 중심)
+        function createParticles(x, y, color) {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${x + (Math.random() * 60 - 30)}px`;
+                particle.style.top = `${y + (Math.random() * 60 - 30)}px`;
+                particle.style.width = `${Math.random() * 8 + 4}px`;
+                particle.style.height = particle.style.width;
+                particle.style.backgroundColor = color;
+                particle.style.borderRadius = '50%';
+                document.body.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        // 3. 오늘의 롤 챔피언 추천 데이터 (12개 이상)
+        const champions = [
+            { name: "야스오", position: "미드 / 탑", quote: "죽음은 바람과 같지. 내 곁에 있으니.", tag: "과학" },
+            { name: "티모", position: "탑", quote: "티모 대위, 명을 받들겠습니다!", tag: "귀여움(?)" },
+            { name: "아리", position: "미드", quote: "우리 더 재미있는 놀이를 해볼까?", tag: "매혹" },
+            { name: "리 신", position: "정글", quote: "당신의 뜻대로 이뤄지리이다.", tag: "배달기사" },
+            { name: "징크스", position: "원딜", quote: "신나게 비오듯 쏘아볼까!", tag: "광기" },
+            { name: "블리츠크랭크", position: "서포터", quote: "시스템 가동. 준비 완료.", tag: "그랩" },
+            { name: "가렌", position: "탑", quote: "데마시아를 위하여!", tag: "빙글빙글" },
+            { name: "럭스", position: "미드 / 서포터", quote: "빛으로 가버리세요!", tag: "최종혁기" },
+            { name: "이즈리얼", position: "원딜", quote: "내 실력을 보여줄 시간이군!", tag: "노머시" },
+            { name: "유미", position: "서포터", quote: "너랑 나랑! 세상을 바꾸자!", tag: "라면챔" },
+            { name: "제드", position: "미드", quote: "보이지 않는 검이 가장 무서운 법.", tag: "암살자" },
+            { name: "카이사", position: "원딜", quote: "위험을 무릅쓰지 않으면, 아무것도 얻을 수 없어.", tag: "진화" }
+        ];
+
+        function recommendChampion() {
+            const display = document.getElementById('champion-display');
+            
+            // 랜덤 뽑기 애니메이션 연출
+            display.innerHTML = `
+                <div class="animate-spin text-3xl text-[#C8AA6E] mb-2">
+                    <i class="fa-solid fa-spinner"></i>
+                </div>
+                <p class="text-sm text-[#C8AA6E]">소환사의 협곡에서 챔피언을 부르는 중...</p>
+            `;
+
+            setTimeout(() => {
+                const randomChamp = champions[Math.floor(Math.random() * champions.length)];
+                
+                display.innerHTML = `
+                    <div class="animate-fade-in text-center">
+                        <span class="inline-block bg-[#0A323C] border border-[#005A82] text-[#005A82] text-xs font-bold px-2.5 py-0.5 rounded mb-2">
+                            ${randomChamp.position} | #${randomChamp.tag}
+                        </span>
+                        <h3 class="text-3xl font-extrabold text-[#F0E6D2] mb-1 font-cinzel">${randomChamp.name}</h3>
+                        <p class="text-sm text-[#C8AA6E] italic">"${randomChamp.quote}"</p>
+                    </div>
+                `;
+            }, 400);
+        }
+    </script>
+</body>
+</html>
